@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDrawer } from '../contexts/drawerContextProvider';
-import { /*getEtnInnersourceRepos, */ getReposByOrgName /*, getReposByTopic*/ } from '../api/github';
+import { /*getEtnInnersourceRepos, */ getReposByOrgName /*, getReposByTopic*/, getReposByTopic } from '../api/github';
 import { ReposGrid } from '../components/ReposGrid';
 
 export const Repos = (): JSX.Element => {
@@ -71,6 +71,9 @@ export const Repos = (): JSX.Element => {
             // const hacktoberFestRepos = await getReposByTopic('hacktoberfest');
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             // const etnInnersourceRepos = await getEtnInnersourceRepos();
+            const hacktoberFestRepos = await getReposByTopic('hacktoberfest', eatonRepos, 'etn-ccis');
+            // eslint-disable-next-line no-console
+            console.log('repos with hacktoberfest label', hacktoberFestRepos);
 
             if (isMounted) {
                 setRepos(eatonRepos);
