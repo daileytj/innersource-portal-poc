@@ -63,9 +63,9 @@ export const Repos = (): JSX.Element => {
 
     useEffect(() => {
         let isMounted = true;
-        setIsLoading(true);
 
         const getAllRepos = async (): Promise<void> => {
+            setIsLoading(true);
             const eatonRepos = await getReposByOrgName();
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             // const hacktoberFestRepos = await getReposByTopic('hacktoberfest');
@@ -77,10 +77,11 @@ export const Repos = (): JSX.Element => {
                 setFilteredRepos(eatonRepos);
                 setLanguageFilters(getLanguageFiltersFromRepos(eatonRepos));
             }
+
+            setIsLoading(false);
         };
         void getAllRepos();
 
-        setIsLoading(false);
         return (): void => {
             isMounted = false;
         };
@@ -111,32 +112,42 @@ export const Repos = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
-                <FormControl sx={{ minWidth: '200px' }}>
-                    <InputLabel>Language</InputLabel>
-                    <Select value={language} label="Language" onChange={handleLanguageChange}>
-                        {languageFilters.map((_language: string, _index: number) => (
-                            <MenuItem key={_index} value={_language}>
-                                {_language}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <Button onClick={clearRepoFilters} sx={{ width: '200px', alignSelf: 'flex-end' }}>
-                    Clear Filters
-                </Button>
-            </Box>
             <Box
                 sx={{
-                    p: 2,
-                    minHeight: `calc(100vh - ${theme.spacing(8)})`,
+                    minHeight: `calc(100vh - ${theme.spacing(18)})`,
                     display: 'flex',
                     [theme.breakpoints.down('sm')]: {
-                        minHeight: `calc(100vh - ${theme.spacing(7)})`,
+                        minHeight: `calc(100vh - ${theme.spacing(15)})`,
                     },
+                    flexDirection: 'column',
                 }}
             >
-                {isLoading ? <CircularProgress /> : <ReposGrid repos={filteredRepos} />}
+                <Box sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+                    <FormControl sx={{ minWidth: '200px' }}>
+                        <InputLabel>Language</InputLabel>
+                        <Select value={language} label="Language" onChange={handleLanguageChange}>
+                            {languageFilters.map((_language: string, _index: number) => (
+                                <MenuItem key={_index} value={_language}>
+                                    {_language}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <Button onClick={clearRepoFilters} sx={{ width: '200px', alignSelf: 'flex-end', ml: 2 }}>
+                        Clear Filters
+                    </Button>
+                </Box>
+                <Box
+                    sx={{
+                        p: 2,
+                        display: 'flex',
+                        flex: 1,
+                        alignItems: isLoading ? 'center' : 'normal',
+                        justifyContent: isLoading ? 'center' : 'normal',
+                    }}
+                >
+                    {isLoading ? <CircularProgress size={64} /> : <ReposGrid repos={filteredRepos} />}
+                </Box>
             </Box>
         </Box>
     );
