@@ -33,11 +33,11 @@ export const Repos = (): JSX.Element => {
         setFilteredRepos(repos);
     };
 
-    const getLanguageFiltersFromRepos = (): string[] => {
+    const getLanguageFiltersFromRepos = (_repos: any = repos): string[] => {
         const tempArr: string[] = ['All'];
 
-        repos.forEach((repo: any) => {
-            tempArr.push(repo.language);
+        _repos.forEach((_repo: any) => {
+            tempArr.push(_repo.language);
         });
 
         return Array.from(new Set(tempArr));
@@ -75,7 +75,7 @@ export const Repos = (): JSX.Element => {
             if (isMounted) {
                 setRepos(eatonRepos);
                 setFilteredRepos(eatonRepos);
-                setLanguageFilters(getLanguageFiltersFromRepos());
+                setLanguageFilters(getLanguageFiltersFromRepos(eatonRepos));
             }
         };
         void getAllRepos();
