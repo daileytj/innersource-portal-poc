@@ -67,13 +67,13 @@ export const Repos = (): JSX.Element => {
         const getAllRepos = async (): Promise<void> => {
             setIsLoading(true);
             const eatonRepos = await getReposByOrgName();
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            // const hacktoberFestRepos = await getReposByTopic('hacktoberfest');
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            // const etnInnersourceRepos = await getEtnInnersourceRepos();
             const hacktoberFestRepos = await getReposByTopic('hacktoberfest', eatonRepos, 'etn-ccis');
             // eslint-disable-next-line no-console
             console.log('repos with hacktoberfest label', hacktoberFestRepos);
+
+            const etnInnersourceRepos = await getReposByTopic('etn-innersource', eatonRepos, 'etn-ccis');
+            // eslint-disable-next-line no-console
+            console.log('repos with etn-innersource label', etnInnersourceRepos);
 
             if (isMounted) {
                 setRepos(eatonRepos);
