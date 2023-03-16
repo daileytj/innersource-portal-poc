@@ -1,6 +1,8 @@
 import { Octokit } from 'octokit';
 
-const octokit = new Octokit();
+const octokit = new Octokit({
+    auth: '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',
+});
 
 export const getReposByOrgName = async (orgname = 'etn-ccis'): Promise<any | undefined> => {
     try {
@@ -55,3 +57,6 @@ export const getReposByTopic = async (
 
     return participatingRepos;
 };
+
+// get repos by topic without looking up every repo
+// https://api.github.com/search/repositories?accept=application/vnd.github.v3+json&q=archived:false+topic:eaton-innersource+sort:created-desc
