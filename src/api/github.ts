@@ -1,7 +1,7 @@
 import { Octokit } from 'octokit';
 
 const octokit = new Octokit({
-    auth: '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',
+    auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
 });
 
 export const getReposByOrgName = async (orgname = 'etn-ccis'): Promise<any | undefined> => {
